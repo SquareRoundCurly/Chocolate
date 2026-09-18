@@ -35,6 +35,15 @@ java {
     withSourcesJar()
 }
 
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = 'chocolate-tests'
+        enableGameTests = true
+        enableClientGameTests = false
+    }
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.release = 25
     options.encoding = 'UTF-8'

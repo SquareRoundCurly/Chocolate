@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "chocolate-tests",
+  "version": "1.0.0",
+  "name": "Chocolate Game Tests",
+  "environment": "*",
+  "entrypoints": {
+    "fabric-gametest": ["dev.chocolate.ActorInventoryTests"]
+  },
+  "depends": {
+    "chocolate": "*"
+  }
+}

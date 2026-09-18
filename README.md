@@ -17,15 +17,33 @@ inventory, or use `/give @s chocolate:actor` with commands enabled.
 - Places facing toward the player, including upward and downward, like a dispenser.
 - Uses vanilla dispenser models and textures for both the block and its item.
 - Has dispenser-like hardness and drops itself when mined with a pickaxe.
-- Currently has no inventory, interface, redstone behavior, or crafting recipe.
+- Right-click to open a single-slot inventory; shift-click moves items between it
+  and your player inventory.
+- Accepts any item using its normal stack limit (one tool, or a stack of seeds).
+- Hoppers pointing into the Actor can insert items; a hopper beneath it can pull
+  items out. Access is unrestricted by the Actor's facing direction.
+- Contents persist when the world is saved and drop when the Actor is broken.
+- Tool-use behavior, redstone activation, and a crafting recipe are still to come.
 
 The planned functionality is to use stored tools to mine blocks, chop wood, and
-plant seeds. This first version establishes the block and its facing direction.
+plant seeds. The block, facing direction, and inventory are now in place.
 
 To test it, restart the development client, give yourself an Actor, and place it
 on walls, floors, and ceilings to check its orientation and textures. Switch to
-Survival and break it with a pickaxe to check its item drop. Right-clicking or
-powering it should not perform an action yet.
+Survival and break it with a pickaxe to check its item drop.
+
+To test the inventory, right-click an Actor and insert a tool or some seeds. Close
+and reopen it, then save and re-enter the world to check persistence. For hopper
+testing, place a hopper pointing into the Actor and another hopper directly below
+it (optionally leading into a chest). Items should pass through the Actor. Power
+the bottom hopper with a lever to stop extraction while inspecting the contents.
+Powering the Actor does not make it use tools yet.
+
+Server game tests cover hopper insertion from above and the side, extraction from
+below, full-slot handling, saving tool data, and dropping contents on destruction.
+Run `./gradlew runGameTest` to run them in a separate test world. They also run as
+part of `./gradlew build`, including in CI. Test code lives in `src/gametest` and is
+not included in the shipped mod JAR.
 
 ### What the tools do
 
