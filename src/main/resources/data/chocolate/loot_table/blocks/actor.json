@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "condition": { "type": "minecraft:survives_explosion" },
+      "entries": [
+        { "type": "minecraft:item", "name": "chocolate:actor" }
+      ]
+    }
+  ],
+  "random_sequence": "chocolate:blocks/actor"
+}

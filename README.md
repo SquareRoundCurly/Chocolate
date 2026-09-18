@@ -6,8 +6,26 @@ It's intended to add "what should have been" in Minecraft.
 ## Development setup
 
 This is a Java mod for **Minecraft Java Edition 26.3**, using **Fabric**.
-The starter currently logs `Chocolate initialized` when loaded; gameplay features
-will be added later.
+The mod currently adds the **Actor**, a directional block with dispenser textures.
+Its tool-use behavior will be added later.
+
+## Actor
+
+Find **Actor** in the **Redstone Blocks** creative tab, search for it in the Creative
+inventory, or use `/give @s chocolate:actor` with commands enabled.
+
+- Places facing toward the player, including upward and downward, like a dispenser.
+- Uses vanilla dispenser models and textures for both the block and its item.
+- Has dispenser-like hardness and drops itself when mined with a pickaxe.
+- Currently has no inventory, interface, redstone behavior, or crafting recipe.
+
+The planned functionality is to use stored tools to mine blocks, chop wood, and
+plant seeds. This first version establishes the block and its facing direction.
+
+To test it, restart the development client, give yourself an Actor, and place it
+on walls, floors, and ceilings to check its orientation and textures. Switch to
+Survival and break it with a pickaxe to check its item drop. Right-clicking or
+powering it should not perform an action yet.
 
 ### What the tools do
 
@@ -72,7 +90,7 @@ On Windows, use `.\gradlew.bat build` and `.\gradlew.bat runClient` instead.
 `runClient` starts a separate development Minecraft instance with Chocolate and
 Fabric API loaded. Worlds, settings, and logs live in the ignored `run/` folder.
 Look for `Chocolate initialized` in the console or `run/logs/latest.log` to confirm
-that the mod loaded. The starter does not add visible content yet.
+that the mod loaded. Search the Creative inventory for Actor to try the first block.
 
 Close Minecraft before rebuilding and relaunching to see code changes.
 
