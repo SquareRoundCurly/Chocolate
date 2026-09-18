@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Minecraft: prepare VS Code",
+      "type": "shell",
+      "command": "./gradlew",
+      "windows": { "command": ".\\gradlew.bat" },
+      "args": ["classes", "clientClasses", "vscode"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": { "JAVA_HOME": "${config:java.import.gradle.java.home}" }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Minecraft: build mod",
+      "type": "shell",
+      "command": "./gradlew",
+      "windows": { "command": ".\\gradlew.bat" },
+      "args": ["build"],
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": { "JAVA_HOME": "${config:java.import.gradle.java.home}" }
+      },
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": []
+    }
+  ]
+}

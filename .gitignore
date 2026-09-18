@@ -1,0 +1,27 @@
+# Build output and downloaded dependencies
+.gradle/
+build/
+out/
+
+# Development Minecraft instances (including worlds and logs)
+run/
+runServer/
+logs/
+
+# Local IDE state
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+# Loom generates launch.json with machine-specific paths. Regenerate with ./gradlew vscode.
+# settings.json contains the local JDK paths.
+.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json
+
+# Local environment and OS files
+.env
+.env.*
+.DS_Store
+Thumbs.db

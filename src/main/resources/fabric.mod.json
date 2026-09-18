@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "chocolate",
+  "version": "${version}",
+  "name": "Chocolate",
+  "description": "A vanilla+ style Minecraft mod, adding what should have been in Minecraft.",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["dev.chocolate.Chocolate"],
+    "client": ["dev.chocolate.ChocolateClient"]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}",
+    "java": ">=25",
+    "fabric-api": ">=${fabric_api_version}"
+  }
+}

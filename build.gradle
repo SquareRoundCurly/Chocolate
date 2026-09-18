@@ -1,0 +1,81 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        chocolate {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+processResources {
+    def properties = [version: project.version, minecraft_version: project.minecraft_version,
+                      loader_version: project.loader_version, fabric_api_version: project.fabric_api_version]
+    inputs.properties(properties)
+    filesMatching('fabric.mod.json') {
+        expand(properties)
+    }
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    options.encoding = 'UTF-8'
+}
+
+// VS Code's Gradle build server can name the Java project after the folder
+// (Chocolate), while Loom uses the Gradle name (chocolate). Let the debugger
+// resolve the project from the main class in this single-project workspace.
+tasks.named('vscode') {
+    doLast {
+        def launchFile = file('.vscode/launch.json')
+        def launch = new groovy.json.JsonSlurper().parse(launchFile)
+        launch.configurations.findAll {
+            it.mainClass == 'net.fabricmc.devlaunchinjector.Main'
+        }.each {
+            it.remove('projectName')
+        }
+
+        // Keep this extra debug profile when Loom regenerates its launch files.
+        def quickPlayName = 'Minecraft Client (Quick Play)'
+        launch.configurations.removeAll { it.name == quickPlayName }
+        def client = launch.configurations.find { it.name == 'Minecraft Client' }
+        if (client != null) {
+            def quickPlay = new LinkedHashMap(client)
+            quickPlay.name = quickPlayName
+            quickPlay.args = '--quickPlaySingleplayer "${input:chocolateWorld}"'
+            launch.configurations.add(launch.configurations.indexOf(client) + 1, quickPlay)
+
+            if (launch.inputs == null) {
+                launch.inputs = []
+            }
+            if (!launch.inputs.any { it.id == 'chocolateWorld' }) {
+                launch.inputs.add([
+                    id: 'chocolateWorld',
+                    type: 'promptString',
+                    description: 'World folder name under run/saves',
+                    default: 'New World'
+                ])
+            }
+        }
+        launchFile.setText(groovy.json.JsonOutput.prettyPrint(
+            groovy.json.JsonOutput.toJson(launch)) + '\n', 'UTF-8')
+    }
+}
